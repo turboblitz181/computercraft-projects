@@ -1,6 +1,6 @@
 install_url = "https://raw.githubusercontent.com/turboblitz181/computercraft-projects/refs/heads/main/solar_panels/update.lua"
 if not fs.exists("install.lua") then
-  local request = http.get(main_startup_url)
+  local request = http.get(install_url)
   if not request then
     print("error installing")
     return
