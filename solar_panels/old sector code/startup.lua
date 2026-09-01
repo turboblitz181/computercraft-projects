@@ -27,7 +27,7 @@ for k,v in pairs(solar_panels_relay) do
     table.insert(detected_solar_panels, {relay = v, sequence = solar_panels_sequence[k], zeroed = false})
 end
 
-function zero(v)
+function zero(v,tohour)
     aligned = false
     if v.relay.getInput("bottom") then
         v.zeroed = true
@@ -50,14 +50,12 @@ function zero(v)
     sleep(5)
     prev_hour = 6
     while aligned == false do
-        time = os.time("ingame")
-        hour = math.floor(time)
-        if hour < 18 and hour > 5 and prev_hour < hour then
-            remaining_hours = hour - prev_hour 
+        if tohour < 18 and tohour > 5 and prev_hour < tohour then
+            remaining_hours = tohour - prev_hour 
             v.sequence.rotate(angle * remaining_hours,-1)
-            aligned = true
         end
         sleep(0.1)
+        aligned = true
     end
 end
 
@@ -110,10 +108,11 @@ end
 
 scan()
 
-
+time = os.time("ingame")
+tohour = math.floor(time)
 for k,v in pairs(solar_panels) do 
     p = {relay = peripheral.wrap(v.relay), sequence = peripheral.wrap(v.sequence),zeroed = v.zeroed}
-    zero(p)
+    zero(p,tohour)
 end
 
 while running do
