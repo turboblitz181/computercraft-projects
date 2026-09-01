@@ -47,7 +47,7 @@ function zero(v,tohour)
         end
         sleep(0.1)
     end
-    sleep(5)
+    sleep(3)
     prev_hour = 6
     while aligned == false do
         if tohour < 18 and tohour > 5 and prev_hour < tohour then
